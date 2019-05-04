@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="et_name" type="id" />
+    <item name="btnShareLink" type="id" />
+    <item name="et_content" type="id" />
+    <item name="b_save" type="id" />
+    <item name="tv_text" type="id" />
+    <item name="Where" type="id" />
+    <item name="When" type="id" />
+    <item name="WhereCommunicatie" type="id" />
+    <item name="Program" type="id" />
+    <item name="ProgramCommunicatie" type="id" />
+    <item name="button2" type="id" />
+    <item name="button4" type="id" />
+</resources>

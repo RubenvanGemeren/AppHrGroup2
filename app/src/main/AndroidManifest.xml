@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.larsnavigationdrawer">
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <activity
+            android:name=".contactpage"
+            android:label="@string/title_activity_contactpage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".opendag5"
+            android:label="@string/title_activity_opendag5"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".opendag4"
+            android:label="@string/title_activity_opendag4"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".opendag3"
+            android:label="@string/title_activity_opendag3"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".opendag2"
+            android:label="@string/title_activity_opendag2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".opendag1"
+            android:label="@string/title_activity_opendag1"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomepageActivity"
+            android:label="@string/title_activity_homepage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:authorities="com.facebook.app.FacebookContentPrivider446887582735464"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        
+    </application>
+
+</manifest>

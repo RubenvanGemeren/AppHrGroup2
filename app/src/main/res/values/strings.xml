@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Open days CMI</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Hogeschool Rotterdam</string>
+    <string name="nav_header_subtitle">Naam(leerlingnummer)</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_homepage">Menu</string>
+    <string name="title_activity_opendag1">Communicatie</string>
+    <string name="title_activity_opendag2">CMD</string>
+    <string name="title_activity_opendag3">CMGT</string>
+    <string name="title_activity_opendag4">Informatica</string>
+    <string name="title_activity_opendag5">Technische Informatica</string>
+    <string name="title_activity_contactpage">Contact</string>
+    <string name="facebook_app_id">446887582735464</string>
+    <string name="facebook_login_protocol_scheme">fb446887582735464</string>
+</resources>
