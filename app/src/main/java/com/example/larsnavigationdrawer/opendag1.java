@@ -33,7 +33,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -43,8 +42,6 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,11 +53,6 @@ import java.io.InputStreamReader;
 
 public class opendag1 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
-    EditText et_name, et_content;
-    Button b_save;
-
     TextView tv_text;
     TextView Wc_text;
     TextView W_text;
@@ -68,38 +60,52 @@ public class opendag1 extends AppCompatActivity
     TextView WhrC_text;
     TextView P_text;
     TextView PC_text;
+    Button btnShareLink;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        setContentView(R.layout.activity_opendag1);
 
+        btnShareLink = (Button) findViewById(R.id.btnShareLink);
 
-
-
-        //Init FB
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
 
-        et_name = (EditText) findViewById(R.id.et_name);
-        et_content = (EditText) findViewById(R.id.et_content);
-        b_save = (Button) findViewById(R.id.b_save);
-
-        b_save.setOnClickListener(new View.OnClickListener() {
+        btnShareLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String filename = et_name.getText().toString();
-                String content = et_content.getText().toString();
+                shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {
+                        Toast.makeText(opendag1.this, "Share successful", Toast.LENGTH_SHORT).show();
+                    }
 
-                if(!filename.equals("")&& !content.equals("")) {
-                    saveTextAsFile(filename, content);
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(opendag1.this, "Share cancel", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(opendag1.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setQuote("Go visit this open day!")
+                        .setContentUrl(Uri.parse("https://www.hogeschoolrotterdam.nl/samenwerking/instituten/instituut-voor-communicatie-media-en-informatietechnologie/introductie/"))
+                        .build();
+                if(ShareDialog.canShow(ShareLinkContent.class)){
+                    shareDialog.show(linkContent);
                 }
             }
         });
@@ -123,7 +129,7 @@ public class opendag1 extends AppCompatActivity
         }
         tv_text.setText(text);
 
-        Wc_text = (TextView) findViewById(R.id.WhereCommunicatie);
+        Wc_text = (TextView) findViewById(R.id.WhenCommunicatie);
         String WhenCommunicatie = "";
         try{
             InputStream is = getAssets().open("WhenCommunicatie.txt");
@@ -208,16 +214,6 @@ public class opendag1 extends AppCompatActivity
         PC_text.setText(ProgramCommunicatie);
 
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -228,40 +224,11 @@ public class opendag1 extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
     }
-    private void saveTextAsFile(String filename, String content){
-        String fileName = filename + ".txt";
-
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
-
-        try{
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(content.getBytes());
-            fos.close();
-            Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "File not Found", Toast.LENGTH_SHORT).show();
-        } catch (IOException e){
-            e.printStackTrace();
-            Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
-        }
+    public void Browser1(View view){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/communicatie/voltijd/"));
+        startActivity(browserIntent);
     }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case 1000:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this, "Permission granted!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission not granted!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-        }
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -298,7 +265,6 @@ public class opendag1 extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_mainmenu) {
@@ -329,3 +295,4 @@ public class opendag1 extends AppCompatActivity
         return true;
     }
 }
+
