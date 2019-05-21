@@ -8,8 +8,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.customtabs.IPostMessageService;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,47 +22,81 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.share.widget.ShareDialog;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.List;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
-public class contactpage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
-    EditText et_name2, et_content2;
+public class contactpage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String FILE_NAME = "fileforappopendayhr";
+    EditText mEditText;
     Button b_save2;
+    ListView lv;
+    SearchView sv;
+    private Button button3;
+
+    String[] teams={"Communicatie","Communication and Multimedia Design","Creative Media and game Technologies","Informatica","technishe informatica"};
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contactpage);
 
+
+        lv=(ListView) findViewById(R.id.listView1);
+        sv=(SearchView) findViewById(R.id.searchView1);
+
+        adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,teams);
+        lv.setAdapter(adapter);
+
+        sv.setOnQueryTextListener(new OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String text) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+
+                adapter.getFilter().filter(text);
+
+                return false;
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
 
-        et_name2 = (EditText) findViewById(R.id.et_name2);
-        et_content2 = (EditText) findViewById(R.id.et_content2);
+        mEditText = (EditText) findViewById(R.id.Edit_text);
         b_save2 = (Button) findViewById(R.id.b_save2);
 
-        b_save2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String filename = et_name2.getText().toString();
-                String content = et_content2.getText().toString();
-                if(!filename.equals("") && !content.equals("")) {
-                    saveTextAsFile(filename, content);
-                }
-            }
-        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -90,26 +127,78 @@ public class contactpage extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        button3 = (Button) findViewById(R.id.button3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCalanderpage();
+            }
+        });
     }
 
-    private void saveTextAsFile(String filename, String content){
-        String fileName = filename + ".txt";
+    public void openCalanderpage(){
+        Intent intent = new Intent(this, calanderpage.class);
+        startActivity(intent);
+    }
 
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
 
-        try{
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(content.getBytes());
-            fos.close();
-            Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+
+    public void save(View v){
+        String text = mEditText.getText().toString();
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(text.getBytes());
+
+            mEditText.getText().clear();
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error saving!", Toast.LENGTH_SHORT).show();
+        } finally {
+            if (fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+
+    public void load(View v){
+        FileInputStream fis = null;
+
+        try {
+            fis = openFileInput(FILE_NAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            String text;
+
+            while ( (text = br.readLine()) != null){
+                sb.append(text).append("\n");
+            }
+
+            mEditText.setText(sb.toString());
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){

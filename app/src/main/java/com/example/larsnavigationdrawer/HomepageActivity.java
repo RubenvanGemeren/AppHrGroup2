@@ -30,6 +30,7 @@ public class HomepageActivity extends AppCompatActivity
     private Button buttonOpendaysv4;
     private Button buttonOpendaysv5;
     private Button contactpage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
