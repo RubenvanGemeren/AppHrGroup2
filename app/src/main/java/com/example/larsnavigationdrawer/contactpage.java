@@ -141,6 +141,7 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
         Intent intent = new Intent(this, calanderpage.class);
         startActivity(intent);
     }
+    
 
 
 
