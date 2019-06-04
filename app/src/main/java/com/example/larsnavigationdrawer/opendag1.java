@@ -54,8 +54,6 @@ import java.io.InputStreamReader;
 public class opendag1 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView tv_text;
-    TextView Wc_text;
-    TextView W_text;
     TextView Whr_text;
     TextView WhrC_text;
     TextView P_text;
@@ -63,6 +61,10 @@ public class opendag1 extends AppCompatActivity
     Button btnShareLink;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+
+    Button buttonWherecom;
+    Button buttonProgramcom;
+    Button buttonTraildaycom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +78,52 @@ public class opendag1 extends AppCompatActivity
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
+
+
+
+
+        buttonWherecom = (Button) findViewById(R.id.buttonWherecom);
+        buttonProgramcom = (Button) findViewById(R.id.buttonProgramcom);
+        buttonTraildaycom = (Button) findViewById(R.id.buttonTraildaycom);
+
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
+
+
+
+
+
+
+
+
+        buttonWherecom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWherecominfo();
+            }
+        });
+        buttonProgramcom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProgramcominfo();
+            }
+        });
+        buttonTraildaycom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTraildaycominfo();
+            }
+        });
+
+
+
+
+
+
 
         btnShareLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,33 +173,6 @@ public class opendag1 extends AppCompatActivity
         }
         tv_text.setText(text);
 
-        Wc_text = (TextView) findViewById(R.id.WhenCommunicatie);
-        String WhenCommunicatie = "";
-        try{
-            InputStream is = getAssets().open("WhenCommunicatie.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            WhenCommunicatie = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        Wc_text.setText(WhenCommunicatie);
-
-        W_text = (TextView) findViewById(R.id.When);
-        String When = "";
-        try{
-            InputStream is = getAssets().open("When.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            When = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        W_text.setText(When);
 
         Whr_text = (TextView) findViewById(R.id.Where);
         String Where = "";
@@ -225,10 +242,33 @@ public class opendag1 extends AppCompatActivity
 
 
     }
+
+
     public void Browser1(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/communicatie/voltijd/"));
         startActivity(browserIntent);
     }
+
+
+
+
+
+    public void openWherecominfo(){
+        Intent intent = new Intent(this, communicatiewheremoreinfo.class);
+        startActivity(intent);
+    }
+    public void openProgramcominfo(){
+        Intent intent = new Intent(this, communicatieprogrammoreinfo.class);
+        startActivity(intent);
+    }
+    public void openTraildaycominfo(){
+        Intent intent = new Intent(this, communicatietraildaysmoreinfo.class);
+        startActivity(intent);
+    }
+
+
+
+
 
     @Override
     public void onBackPressed() {
