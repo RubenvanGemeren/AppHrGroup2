@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.larsnavigationdrawer">
+    package="com.example.larsnavigationdrawer"
+    android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,6 +15,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".writingmemos"></activity>
+        <activity android:name=".tinftraildaysmoreinfo" />
+        <activity android:name=".tinfprogrammoreinfo" />
+        <activity android:name=".tinfwheremorinfo" />
+        <activity android:name=".inftraildaysmoreinfo" />
+        <activity android:name=".infprogrammoreinfo" />
+        <activity android:name=".infwheremoreinfo" />
+        <activity android:name=".cmgttraildaysmoreinfo" />
+        <activity android:name=".cmgtprogrammoreinfo" />
+        <activity android:name=".cmgtwheremoreinfo" />
+        <activity android:name=".cmdtraildaysmoreinfo" />
+        <activity android:name=".cmdprogrammoreinfo" />
+        <activity android:name=".cmdwheremoreinfo" />
+        <activity android:name=".communicatietraildaysmoreinfo" />
+        <activity android:name=".communicatieprogrammoreinfo" />
+        <activity android:name=".communicatiewheremoreinfo" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -22,7 +39,8 @@
         <activity
             android:name=".contactpage"
             android:label="@string/title_activity_contactpage"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".opendag5"
             android:label="@string/title_activity_opendag5"
@@ -56,16 +74,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".calanderpage">
+        <activity android:name=".calanderpage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <provider

@@ -57,8 +57,6 @@ import java.io.InputStreamReader;
 public class opendag5 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView Wc_text;
-    TextView W_text;
     TextView Whr_text;
     TextView WhrC_text;
     TextView P_text;
@@ -66,6 +64,10 @@ public class opendag5 extends AppCompatActivity
     Button btnShareLink;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+
+    Button buttonWhereTINF;
+    Button buttonProgramTINF;
+    Button buttonTraildayTINF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +78,37 @@ public class opendag5 extends AppCompatActivity
 
         btnShareLink = (Button) findViewById(R.id.btnShareLink);
 
+
+        buttonWhereTINF = (Button) findViewById(R.id.buttonWhereTINF);
+        buttonProgramTINF = (Button) findViewById(R.id.buttonProgramTINF);
+        buttonTraildayTINF = (Button) findViewById(R.id.buttonTraildayTINF);
+
+
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
+
+        buttonWhereTINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhereTINFinfo();
+            }
+        });
+        buttonProgramTINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProgramTINFinfo();
+            }
+        });
+        buttonTraildayTINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTraildayTINFinfo();
+            }
+        });
 
         btnShareLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,33 +142,6 @@ public class opendag5 extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Wc_text = (TextView) findViewById(R.id.WhenTInformatica);
-        String WhenCommunicatie = "";
-        try{
-            InputStream is = getAssets().open("WhenTInformatica.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            WhenCommunicatie = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        Wc_text.setText(WhenCommunicatie);
-
-        W_text = (TextView) findViewById(R.id.When);
-        String When = "";
-        try{
-            InputStream is = getAssets().open("When.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            When = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        W_text.setText(When);
 
         Whr_text = (TextView) findViewById(R.id.Where);
         String Where = "";
@@ -188,7 +188,7 @@ public class opendag5 extends AppCompatActivity
         PC_text = (TextView) findViewById(R.id.ProgramTInformatica);
         String ProgramCommunicatie = "";
         try{
-            InputStream is = getAssets().open("ProgramTInformatica.txt");
+            InputStream is = getAssets().open("ProgramCMGT.txt");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -209,9 +209,23 @@ public class opendag5 extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void Browser5(View view){
+    public void Browser1(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/technische-informatica/voltijd/"));
         startActivity(browserIntent);
+    }
+
+
+    public void openWhereTINFinfo(){
+        Intent intent = new Intent(this, tinfwheremorinfo.class);
+        startActivity(intent);
+    }
+    public void openProgramTINFinfo(){
+        Intent intent = new Intent(this, tinfprogrammoreinfo.class);
+        startActivity(intent);
+    }
+    public void openTraildayTINFinfo(){
+        Intent intent = new Intent(this, tinftraildaysmoreinfo.class);
+        startActivity(intent);
     }
 
     @Override
@@ -230,16 +244,6 @@ public class opendag5 extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

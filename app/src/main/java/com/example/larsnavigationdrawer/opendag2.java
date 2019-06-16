@@ -67,6 +67,11 @@ public class opendag2 extends AppCompatActivity
     CallbackManager callbackManager;
     ShareDialog shareDialog;
 
+    Button buttonWhenCMD;
+    Button buttonWhereCMD;
+    Button buttonProgramCMD;
+    Button buttonTraildayCMD;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,10 +83,41 @@ public class opendag2 extends AppCompatActivity
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
+
+
+
+        buttonWhereCMD = (Button) findViewById(R.id.buttonWhereCMD);
+        buttonProgramCMD = (Button) findViewById(R.id.buttonProgramCMD);
+        buttonTraildayCMD = (Button) findViewById(R.id.buttonTraildayCMD);
+
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
+
+
+        buttonWhereCMD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhereCMDinfo();
+            }
+        });
+        buttonProgramCMD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProgramCMDinfo();
+            }
+        });
+        buttonTraildayCMD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTraildayCMDinfo();
+            }
+        });
+
+
 
         btnShareLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,34 +153,6 @@ public class opendag2 extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        Wc_text = (TextView) findViewById(R.id.WhenCommunicatie);
-        String WhenCommunicatie = "";
-        try{
-            InputStream is = getAssets().open("WhenCMD.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            WhenCommunicatie = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        Wc_text.setText(WhenCommunicatie);
-
-        W_text = (TextView) findViewById(R.id.When);
-        String When = "";
-        try{
-            InputStream is = getAssets().open("When.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            When = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        W_text.setText(When);
 
         Whr_text = (TextView) findViewById(R.id.Where);
         String Where = "";
@@ -225,10 +233,26 @@ public class opendag2 extends AppCompatActivity
 
     }
 
-    public void Browser2(View view){
+    public void Browser1(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/communication-and-multimedia-design/voltijd/"));
         startActivity(browserIntent);
     }
+
+
+    public void openWhereCMDinfo(){
+        Intent intent = new Intent(this, cmdwheremoreinfo.class);
+        startActivity(intent);
+    }
+    public void openProgramCMDinfo(){
+        Intent intent = new Intent(this, cmdprogrammoreinfo.class);
+        startActivity(intent);
+    }
+    public void openTraildayCMDinfo(){
+        Intent intent = new Intent(this, cmdtraildaysmoreinfo.class);
+        startActivity(intent);
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -246,14 +270,7 @@ public class opendag2 extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

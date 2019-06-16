@@ -57,8 +57,6 @@ import java.io.InputStreamReader;
 public class opendag4 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView Wc_text;
-    TextView W_text;
     TextView Whr_text;
     TextView WhrC_text;
     TextView P_text;
@@ -66,6 +64,11 @@ public class opendag4 extends AppCompatActivity
     Button btnShareLink;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
+
+
+    Button buttonWhereINF;
+    Button buttonProgramINF;
+    Button buttonTraildayINF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +79,36 @@ public class opendag4 extends AppCompatActivity
 
         btnShareLink = (Button) findViewById(R.id.btnShareLink);
 
+        buttonWhereINF = (Button) findViewById(R.id.buttonWhereINF);
+        buttonProgramINF = (Button) findViewById(R.id.buttonProgramINF);
+        buttonTraildayINF = (Button) findViewById(R.id.buttonTraildayINF);
+
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
+
+
+        buttonWhereINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWhereINFinfo();
+            }
+        });
+        buttonProgramINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openProgramINFinfo();
+            }
+        });
+        buttonTraildayINF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTraildayINFinfo();
+            }
+        });
 
         btnShareLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,33 +142,6 @@ public class opendag4 extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Wc_text = (TextView) findViewById(R.id.WhenInformatica);
-        String WhenCommunicatie = "";
-        try{
-            InputStream is = getAssets().open("WhenInformatica.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            WhenCommunicatie = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        Wc_text.setText(WhenCommunicatie);
-
-        W_text = (TextView) findViewById(R.id.When);
-        String When = "";
-        try{
-            InputStream is = getAssets().open("When.txt");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            When = new String(buffer);
-        } catch (IOException ex){
-            ex.printStackTrace();
-        }
-        W_text.setText(When);
 
         Whr_text = (TextView) findViewById(R.id.Where);
         String Where = "";
@@ -188,7 +188,7 @@ public class opendag4 extends AppCompatActivity
         PC_text = (TextView) findViewById(R.id.ProgramInformatica);
         String ProgramCommunicatie = "";
         try{
-            InputStream is = getAssets().open("ProgramInformatica.txt");
+            InputStream is = getAssets().open("ProgramCMGT.txt");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -209,9 +209,22 @@ public class opendag4 extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void Browser4(View view){
+    public void Browser1(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/informatica/voltijd/"));
         startActivity(browserIntent);
+    }
+
+    public void openWhereINFinfo(){
+        Intent intent = new Intent(this, infwheremoreinfo.class);
+        startActivity(intent);
+    }
+    public void openProgramINFinfo(){
+        Intent intent = new Intent(this, infprogrammoreinfo.class);
+        startActivity(intent);
+    }
+    public void openTraildayINFinfo(){
+        Intent intent = new Intent(this, inftraildaysmoreinfo.class);
+        startActivity(intent);
     }
 
     @Override
@@ -230,14 +243,7 @@ public class opendag4 extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

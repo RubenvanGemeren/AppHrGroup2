@@ -6,27 +6,27 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_mainmenu"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/menu_logo2"
             android:title="Menu" />
         <item
             android:id="@+id/nav_Studie1"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/sidebar_book2"
             android:title="Communicatie" />
         <item
             android:id="@+id/nav_Studie2"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/sidebar_book2"
             android:title="CMD" />
         <item
             android:id="@+id/nav_Studie3"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/sidebar_book2"
             android:title="CMGT" />
         <item
             android:id="@+id/nav_Studie4"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/sidebar_book2"
             android:title="Informatica" />
         <item
             android:id="@+id/nav_Studie5"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/sidebar_book2"
             android:title="Technische Informatica" />
         <item
             android:id="@+id/nav_contactpage"
