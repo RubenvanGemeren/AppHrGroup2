@@ -50,11 +50,10 @@ import android.widget.SearchView.OnQueryTextListener;
 
 public class contactpage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String FILE_NAME = "fileforappopendayhr";
-    EditText mEditText;
-    Button b_save2;
     ListView lv;
     SearchView sv;
     private Button button3;
+    private Button button6;
 
     String[] teams={"Communicatie","Communication and Multimedia Design","Creative Media and game Technologies","Informatica","technishe informatica"};
     ArrayAdapter<String> adapter;
@@ -93,9 +92,6 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
         }
 
-        mEditText = (EditText) findViewById(R.id.Edit_text);
-        b_save2 = (Button) findViewById(R.id.b_save2);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,7 +102,7 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:0638628663"));
+                intent.setData(Uri.parse("tel:010 794 4000"));
                 startActivity(intent);
             }
         });
@@ -114,7 +110,7 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onClick(View v) {
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("sms:0638628663"));
+                sendIntent.setData(Uri.parse("sms:010 794 4000"));
                 startActivity(sendIntent);
             }
         });
@@ -135,69 +131,23 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
                 openCalanderpage();
             }
         });
+        button6 = (Button) findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNotespage();
+            }
+        });
     }
+
 
     public void openCalanderpage(){
         Intent intent = new Intent(this, calanderpage.class);
         startActivity(intent);
     }
-
-
-
-
-    public void save(View v){
-        String text = mEditText.getText().toString();
-        FileOutputStream fos = null;
-
-        try {
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(text.getBytes());
-
-            mEditText.getText().clear();
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE_NAME, Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null){
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void load(View v){
-        FileInputStream fis = null;
-
-        try {
-            fis = openFileInput(FILE_NAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String text;
-
-            while ( (text = br.readLine()) != null){
-                sb.append(text).append("\n");
-            }
-
-            mEditText.setText(sb.toString());
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public void openNotespage(){
+        Intent intent = new Intent(this, writingmemos.class);
+        startActivity(intent);
     }
 
 
@@ -230,16 +180,7 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

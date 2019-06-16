@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tinftraildaysmoreinfo"></activity>
+        <activity android:name=".writingmemos"></activity>
+        <activity android:name=".tinftraildaysmoreinfo" />
         <activity android:name=".tinfprogrammoreinfo" />
         <activity android:name=".tinfwheremorinfo" />
         <activity android:name=".inftraildaysmoreinfo" />
@@ -38,7 +39,8 @@
         <activity
             android:name=".contactpage"
             android:label="@string/title_activity_contactpage"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".opendag5"
             android:label="@string/title_activity_opendag5"
