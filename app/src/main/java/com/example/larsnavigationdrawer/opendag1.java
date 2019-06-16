@@ -65,7 +65,7 @@ public class opendag1 extends AppCompatActivity
     Button buttonWherecom;
     Button buttonProgramcom;
     Button buttonTraildaycom;
-
+//great code! groetjes lars
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,19 +239,12 @@ public class opendag1 extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
-
 
     public void Browser1(View view){
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hogeschoolrotterdam.nl/opleidingen/bachelor/communicatie/voltijd/"));
         startActivity(browserIntent);
     }
-
-
-
-
 
     public void openWherecominfo(){
         Intent intent = new Intent(this, communicatiewheremoreinfo.class);
