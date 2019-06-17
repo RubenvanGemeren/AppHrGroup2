@@ -61,11 +61,10 @@ public class opendag1 extends AppCompatActivity
     Button btnShareLink;
     CallbackManager callbackManager;
     ShareDialog shareDialog;
-
+//this is good! Lars M
     Button buttonWherecom;
     Button buttonProgramcom;
     Button buttonTraildaycom;
-//great code! groetjes lars
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

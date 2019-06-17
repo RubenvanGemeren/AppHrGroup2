@@ -74,7 +74,6 @@ public class contactpage extends AppCompatActivity implements NavigationView.OnN
 
             @Override
             public boolean onQueryTextSubmit(String text) {
-                // TODO Auto-generated method stub
                 return false;
             }
 
